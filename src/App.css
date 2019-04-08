@@ -1,28 +1,13 @@
+
 .App {
   text-align: center;
+  justify-content: center;
+  background-color: #3a4d52;
 }
-
 
 .App-header {
-  background-color: #7f8283;
-  min-height: 100vh;
+  background-color: #f2f5f7;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-
-.table
-{
-    margin: 20%;
-    
-
-}
-
-.Button
-{
-margin-bottom: 20% important!
+ font-size: calc(10px + 2vmin);
 }
