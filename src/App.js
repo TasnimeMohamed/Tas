@@ -184,7 +184,6 @@ class AddIteam extends Component {
                 </Table.Row>
 
               )
-
             })
           }
           </Table.Body>
