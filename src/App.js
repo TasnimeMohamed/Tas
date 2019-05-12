@@ -1,172 +1,201 @@
 import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
-import { Table, Button, Form, Input, Menu,Container} from 'semantic-ui-react';
+import { Table, Button, Form, Input, Container, Label } from 'semantic-ui-react';
 import './App.css';
-class App extends Component{
 
-  render()
-  {
-    return(
-      <div className="App">
-
-      <Header />
-      <AddIteam />
-</div>
-    )
-  }
-}
-class Header extends Component {
-
-  state = { activeItem: 'home'}
-
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+class App extends Component {
 
   render() {
-    const { activeItem } = this.state
-
     return (
-      <Menu size='small'>
-        <Menu.Item
-          name='home'
-          active={activeItem === 'home'}
-          onClick={this.handleItemClick}
-        />
-        <Menu.Item
-          name='messages'
-          active={activeItem === 'messages'}
-          onClick={this.handleItemClick}
-        />
-         <Menu.Menu position='right'>
-          <Menu.Item>
-            <Button primary>Sign Up</Button>
-          </Menu.Item>
-        </Menu.Menu>
-      </Menu>
+      <div className="App">
+        <AddIteam />
+      </div>
     )
   }
 }
-    class AddIteam extends Component {
-      addTodo(event){
-        event.preventDefault();
-        let Item = this.refs.Iteam.value;
-        let Description = this.refs.Description.value;
-        let Price = this.refs.Price.value;
-        let counter = this.state.counter;
-        counter+= 1;
-        let todo ={
-          Item,
-          Description,
-          Price,
-          counter
-        };
-  let todos = this.state.todos;
-  todos.push(todo);
-  this.setState({
-       todos: todos,
-       counter: counter
-  });
-  
-   this.refs.todoTable.reset();
-      }
-      constructor()
-      {
-        super();
-        this.addTodo= this.addTodo.bind(this);
-        this.state={
-          todos:[],
-          counter:0
-        }
-      }
-        render(){
-          let todos = this.state.todos;
 
-          return(
-            <Container>
-
-            <div className="AddIteam">
-
-            <Form className="Menuform" refs="todoTable">
-            <Form.Group widths='equal'>
-              <Form.Field control={Input} refs="Item" placeholder='Item' />
-              <Form.Field control={Input} refs="Description" placeholder='Description' />
-              <Form.Field control={Input} refs="Price" placeholder='Price' />
-      
-           <Form.Field  className= "Button"control={Button} onClick={this.addTodo}>Add</Form.Field>
-              </Form.Group>
-          </Form>
-          <Table className='Table1' >
-    <Table.Header>
-      <Table.Row>
-        <Table.HeaderCell>Item</Table.HeaderCell>        
-        <Table.HeaderCell>Description</Table.HeaderCell>
-        <Table.HeaderCell>Price</Table.HeaderCell>
-        <Table.HeaderCell>Delete</Table.HeaderCell>
-        <Table.HeaderCell>Update</Table.HeaderCell>
+class AddIteam extends Component {
 
 
-      </Table.Row>
-    </Table.Header>
+  constructor(props) {
+    super(props);
 
-    <Table.Body>
-      <Table.Row>
-        
-          {todos.map((todo=><Table.Cell key={todo.counter}>{todo.Item}</Table.Cell>))}
-          {todos.map((todo=><Table.Cell key={todo.counter}>{todo.Description}</Table.Cell>))}
-          {todos.map((todo=><Table.Cell key={todo.counter}>{todo.Price}</Table.Cell>))}
+    this.state = {
+      Items_Category: [],
+      name: '',
+      desc: '',
+      price: '',
+      showInput: true,
 
-          <Table.Cell>    <Button negative>Delete</Button></Table.Cell>
-          <Table.Cell>    <Button positive>Update</Button></Table.Cell>
+    };
 
-      </Table.Row>
-     
-      
-      
-    </Table.Body>
-  </Table>
-          </div>
-            </Container>
-
-                );
-        }
-      }
-      
- /* class Table1 extends Component {
-   
-          render(){          
-return(  
-  <Container>
-          <Table className='Table1' >
-    <Table.Header>
-      <Table.Row>
-        <Table.HeaderCell>Item</Table.HeaderCell>        
-        <Table.HeaderCell>Description</Table.HeaderCell>
-        <Table.HeaderCell>Price</Table.HeaderCell>
-        <Table.HeaderCell>Delete</Table.HeaderCell>
-        <Table.HeaderCell>Update</Table.HeaderCell>
+    this.Add = this.Add.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.onRemoveItem = this.onRemoveItem.bind(this)
+    this.Edit = this.Edit.bind(this)
+    this.handleShowLabel = this.handleShowLabel.bind(this)
 
 
-      </Table.Row>
-    </Table.Header>
+  }
 
-    <Table.Body>
-      <Table.Row>
-        
-          {todos.map((todo=><Table.Cell key={todo.counter}>{todo.Item}</Table.Cell>))}
-          {todos.map((todo=><Table.Cell key={todo.counter}>{todo.Description}</Table.Cell>))}
-          {todos.map((todo=><Table.Cell key={todo.counter}>{todo.Price}</Table.Cell>))}
+  handleChange(e) {
 
-          <Table.Cell>    <Button negative>Delete</Button></Table.Cell>
-          <Table.Cell>    <Button positive>Update</Button></Table.Cell>
+    if (e.target.id === 'name') {
+      this.setState({
+        name: e.target.value
+      })
 
-      </Table.Row>
-     
-      
-      
-    </Table.Body>
-  </Table>
-  </Container>
+    }
+    else if (e.target.id === 'desc') {
+      this.setState({
+        desc: e.target.value
+      })
+
+    }
+    else if (e.target.id === 'price') {
+      this.setState({
+        price: e.target.value
+      })
+
+    }
+
+  }
+
+
+
+  Add(e) {
+    e.preventDefault();
+    this.setState({
+      Items_Category: [...this.state.Items_Category, {
+        name: this.state.name,
+        desc: this.state.desc,
+        price: this.state.price
+      }]
+    })
+    this.setState({ name: '', desc: '', price: '' })
+  }
+
+  onRemoveItem(index) {
+    let Items_Category = [...this.state.Items_Category]
+    Items_Category.splice(index, 1)
+    this.setState({
+      Items_Category: Items_Category
+    })
+  }
+  /* onRemoveItem = id => {
+    this.setState(state => {
+      const Items_Category = state.Items_Category.filter(item => item.id !== id);
+      return {
+        Items_Category,
+      };
+    });
+  };*/
+  Edit(index) {
+    let name = document.getElementById("name" + index).value
+    let desc = document.getElementById("desc" + index).value
+    let price = document.getElementById("price" + index).value;
+    let items = this.state.Items_Category;
+    let item = this.state.Items_Category[index];
+    item.name = name;
+    item.desc = desc;
+    item.price = price;
+    items[index] = item;
+    this.setState({
+      Items_Category: items
+    })
+    console.log('itemCategory', this.state.Items_Category)
+    return {
+
+
+    }
+
+  };
+
+
+  handleShowLabel(e) {
+    this.setState({
+      showInput: !this.state.showInput
+    });
+  }
+
+
+
+
+
+  render() {
+    //let   Items_Category = this.state;
+    return (
+      <Container>
+        <Form onSubmit={(e) => this.Add(e)} className="FormIteam">
+          <Form.Group widths='equal'>
+            <Input id='name' type='text' onChange={this.handleChange} value={this.state.name} placeholder='Item' />
+            <Input id='desc' type='text' onChange={this.handleChange} value={this.state.desc} placeholder='Description' />
+            <Input id='price' type='number' onChange={this.handleChange} value={this.state.price} placeholder='Price' />
+            <Form.Field className="Button" type="submit" control={Button} >Add</Form.Field>
+          </Form.Group>
+        </Form>
+        <Table className='Table1' >
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Item</Table.HeaderCell>
+              <Table.HeaderCell>Description</Table.HeaderCell>
+              <Table.HeaderCell>Price</Table.HeaderCell>
+              <Table.HeaderCell>Delete</Table.HeaderCell>
+              <Table.HeaderCell>Update</Table.HeaderCell>
+
+            </Table.Row>
+          </Table.Header>
+          <Table.Body >  {
+            this.state.Items_Category.map((item, i) => {
+              return (
+                <Table.Row key={i}>
+                  {this.state.showInput ?
+                   <React.Fragment>
+                    <Table.Cell id={'name' + i} >
+                      <Label>{item.name}</Label>
+                    </Table.Cell>
+
+                    <Table.Cell id={'desc' + i}>
+                      <Label>{item.desc}</Label>
+                    </Table.Cell>
+
+                    <Table.Cell id={'price' + i}>
+                      <Label>{item.price}</Label>
+                    </Table.Cell>
+
+                    <Table.Cell><Button negative onClick={() => this.onRemoveItem(i)}>Delete</Button></Table.Cell>
+                    <Table.Cell><Button positive onClick={() => this.handleShowLabel(i)}> Edit</Button></Table.Cell>
+                    </React.Fragment>
+
+
+:
+<React.Fragment>
+                    <Table.Cell id={'name' + i} >
+                      <Input type='text' className='text ui.label' onChange={() => this.Edit(i)} value={item.name}></Input>
+                    </Table.Cell>
+
+                    <Table.Cell id={'desc' + i}>
+                      <Input className='textarea ui.label' onChange={() => this.Edit(i)} value={item.desc} ></Input>
+                    </Table.Cell>
+
+                    <Table.Cell id={'price' + i}>
+                      <Input type='text' className='text ui.label' onChange={() => this.Edit(i)} value={item.price}></Input>
+                    </Table.Cell>
+                    <Table.Cell><Button positive onClick={() => this.handleShowLabel(i)}> Save</Button></Table.Cell>
+                    </React.Fragment>
+              }
+                </Table.Row>
+
+              )
+
+            })
+          }
+          </Table.Body>
+        </Table>
+      </Container>
+
     );
   }
 }
-*/
+
 export default App;
