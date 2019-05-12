@@ -142,7 +142,6 @@ class AddIteam extends Component {
               <Table.HeaderCell>Price</Table.HeaderCell>
               <Table.HeaderCell>Delete</Table.HeaderCell>
               <Table.HeaderCell>Update</Table.HeaderCell>
-
             </Table.Row>
           </Table.Header>
           <Table.Body >  {
@@ -166,8 +165,6 @@ class AddIteam extends Component {
                     <Table.Cell><Button negative onClick={() => this.onRemoveItem(i)}>Delete</Button></Table.Cell>
                     <Table.Cell><Button positive onClick={() => this.handleShowLabel(i)}> Edit</Button></Table.Cell>
                     </React.Fragment>
-
-
 :
 <React.Fragment>
                     <Table.Cell id={'name' + i} >
